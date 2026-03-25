@@ -15,11 +15,11 @@ if ($env === 'development' && file_exists(__DIR__ . '/load_env.php')) {
 $home = getenv('HOME') ?: ($_SERVER['HOME'] ?? '');
 
 if (!defined('REVISIONS_PATH')) {
-    $env_value = getenv('REVISIONS_DIR') ?: ($_SERVER['REVISIONS_DIR'] ?? null);
+    $env_value = getenv('REVISIONS_DIR_0') ?: ($_SERVER['REVISIONS_DIR_0'] ?? null);
     if ($env_value) {
         $rev_path = $env_value;
     } else {
-        $rev_path = $home ? $home . '/public_html/revisions_new1' : dirname(__DIR__) . '/revisions_new1';
+        $rev_path = $home ? $home . '/public_html/revisions_new' : dirname(__DIR__) . '/revisions_new';
     }
     define('REVISIONS_PATH', $rev_path);
 }

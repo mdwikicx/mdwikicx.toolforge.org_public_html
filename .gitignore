@@ -16,3 +16,4 @@ public_html/mdtexts/all_pages.json
 public_html/mdtexts/cats_titles.json
 public_html/mdtexts/titles.json
 databasebackup/*.gz
+auth.ini
