@@ -70,17 +70,15 @@ function get_wikitext($title, $all)
     // ---
     $json1 = get_wikitext_from_mdwiki_restapi($title);
     // ---
-    $source = $json1[0];
-    $revid = $json1[1];
-    // ---
-    // if $source match #REDIRECT [[.*?]] then get the wikitext from target page
-    if (preg_match('/#REDIRECT \[\[(.*?)\]\]/i', $source, $matches)) {
+    // if $json1[0] match #REDIRECT [[.*?]] then get the wikitext from target page
+    if (preg_match('/#REDIRECT \[\[(.*?)\]\]/i', $json1[0], $matches)) {
         $title = $matches[1];
         test_print("Redirecting to: $title\n");
         $json1 = get_wikitext_from_mdwiki_restapi($title);
-        $source = $json1[0];
-        $revid = $json1[1];
     }
+    // ---
+    $source = $json1[0];
+    $revid = $json1[1];
     // ---
     if ($source != '') {
         // ---
@@ -89,12 +87,11 @@ function get_wikitext($title, $all)
         if ($all == '') {
             test_print("get_lead_section: \n");
             $full_text = $source;
-            $lead = get_lead_section($source);
+            $lead = get_lead_section($full_text);
             if (!empty($lead)) {
                 $source = refs_expend_work($lead, $full_text);
             }
         }
-        // ---
         $source = fix_wikitext($source, $title);
     }
     // ---
