@@ -6,3 +6,12 @@ public_html/revisions_new/*/*.txt
 public_html/revisions_new/*/*.html
 public_html/w/ContentTranslation-repo.lnk
 public_html/get_html/*/*.html
+public_html/mdtexts/html/*.html
+public_html/mdtexts/segments/*.html
+public_html/mdtexts/wikitext/*.txt
+# !public_html/mdtexts/html/11p_deletion_syndrome.html
+# !public_html/mdtexts/segments/11p_deletion_syndrome.html
+# !public_html/mdtexts/wikitext/11p_deletion_syndrome.txt
+public_html/mdtexts/all_pages.json
+public_html/mdtexts/cats_titles.json
+public_html/mdtexts/titles.json
