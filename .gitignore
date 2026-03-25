@@ -19,3 +19,5 @@ databasebackup/*.gz
 auth.ini
 public_html/adminer.php
 public_html/adminer1.php
+/public_html/get_html/test
+/public_html/get_html/test2
