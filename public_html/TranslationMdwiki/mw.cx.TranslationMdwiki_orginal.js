@@ -189,7 +189,7 @@ function removeUnlinkedWikibase(html) {
 			// element.parentNode.removeChild(element);
 			// element.remove();
 
-			html = html.replace(lowerOuterHtml, '');
+			html = html.replace(element.outerHTML, '');
 		}
 	});
 
@@ -302,7 +302,7 @@ async function get_mdtexts_2024(title) {
 		console.log(error);
 	}
 	// ---
-	let html = data.html || "";
+	let html = data?.html || "";
 	// ---
 	if (!html || html === "") {
 		console.log("get_mdtexts_2024: not found");
@@ -362,6 +362,9 @@ async function get_Segments_from_mdwiki(targetLanguage, title, tr_type) {
 }
 
 async function fetchSourcePageContent_mdwiki_user_test(page_title, targetLanguage, tr_type, user_name) {
+	// make first litter Capital
+	page_title = page_title.charAt(0).toUpperCase() + page_title.slice(1);
+	// ---
 	mdwiki_last_url.url = "";
 	// ---
 	// if page_title start with "Video:" then tr_type = all
@@ -414,6 +417,9 @@ async function fetchSourcePageContent_mdwiki_new(page_title, targetLanguage, tr_
 }
 
 async function fetchSourcePageContent_mdwiki(page_title, targetLanguage, tr_type, user_name) {
+	// make first litter Capital
+	page_title = page_title.charAt(0).toUpperCase() + page_title.slice(1);
+	// ---
 	mdwiki_last_url.url = "";
 	// ---
 	// if page_title start with "Video:" then tr_type = all

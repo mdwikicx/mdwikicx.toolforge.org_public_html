@@ -57,6 +57,7 @@ async function fetchJson(url, options) {
 	options.headers = {
 		"Content-Type": "application/json",
 		"User-Agent": "WikiProjectMed Translation Dashboard/1.0 (https://mdwiki.toolforge.org/; tools.mdwiki@toolforge.org)",
+		...(options.headers ?? {})
 	};
 	// ---
 	try {
@@ -108,7 +109,8 @@ async function get_mdtexts_2024(title) {
 	const html = data.html.replaceAll("&#34;", '"');
 	const matches = html.match(/Mdwiki_revid"\},"params":\{"1":\{"wt":"(\d+)"\}\}/);
 	// ---
-	if (matches && matches[1]) {
+	// if (matches && matches[1]) {
+	if (matches?.[1]) {
 		out.revision = matches[1];
 		console.log("get_mdtexts_2024 ", out.revision);
 	}
@@ -185,7 +187,8 @@ function get_endpoint_and_title(tr_type, title) {
 function get_html_revision(HTMLText) {
 	if (HTMLText !== '') {
 		const matches = HTMLText.match(/Redirect\/revision\/(\d+)/);
-		if (matches && matches[1]) {
+		// if (matches && matches[1]) {
+		if (matches?.[1]) {
 			const revision = matches[1];
 			return revision;
 		}
@@ -205,7 +208,7 @@ function removeUnlinkedWikibase(html) {
 			// element.parentNode.removeChild(element);
 			// element.remove();
 
-			html = html.replace(lowerOuterHtml, '');
+			html = html.replace(element.outerHTML, '');
 		}
 	});
 
@@ -274,6 +277,9 @@ async function get_Segments_from_mdwiki(targetLanguage, title, tr_type) {
 async function fetchSourcePageContent_mdwiki_user_test(page_title, targetLanguage, tr_type, user_name) {
 	mdwiki_last_url.url = "";
 	// ---
+	// make first litter Capital
+	page_title = page_title.charAt(0).toUpperCase() + page_title.slice(1);
+	// ---
 	// if page_title start with "Video:" then tr_type = all
 	if (page_title.startsWith("Video:") || page_title.startsWith("video:")) {
 		tr_type = "all";
@@ -300,6 +306,9 @@ async function fetchSourcePageContent_mdwiki_user_test(page_title, targetLanguag
 }
 
 async function fetchSourcePageContent_mdwiki_new(page_title, targetLanguage, tr_type, user_name) {
+	// make first litter Capital
+	page_title = page_title.charAt(0).toUpperCase() + page_title.slice(1);
+	// ---
 	// Manual normalisation to avoid redirects on spaces but not to break namespaces
 	const title = page_title.replace(/ /g, "_");
 	// ---
@@ -333,8 +342,9 @@ async function fetchSourcePageContent_mdwiki(page_title, targetLanguage, tr_type
 	// ---
 	const result = await fetchSourcePageContent_mdwiki_new(page_title, targetLanguage, tr_type, user_name);
 	// ---
-	if (result && result.segmentedContent && targetLanguage === "sw") {
-		result.categories = add_sw_categories(result.segmentedContent);
+	// if (result && result.segmentedContent && targetLanguage === "sw") {
+	if (result?.segmentedContent && targetLanguage === "sw") {
+		result.categories = await add_sw_categories(result.segmentedContent);
 	}
 	// ---
 	return result;
